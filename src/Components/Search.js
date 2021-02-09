@@ -17,11 +17,23 @@ const Search = () => {
             }
         })
         setResults(data.query.search);
+        };
+
+        // If it is the first time we are rendering the component we don't want to wait (no Timeout)
+        if (term && !results.length){
+            search();
+        } else {
+            const timeoutId = setTimeout(() =>{
+                if (term){
+                    search();
+                }
+            }, 500);
+    
+            return () =>{
+                clearTimeout(timeoutId);
+            };
         }
-        // if (term){
-        //     search();
-        // }
-        search();
+
     }, [term])
 
     const renderedResults = results.map((result)=>{
