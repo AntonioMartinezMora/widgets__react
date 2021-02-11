@@ -1,4 +1,3 @@
-// import { render } from '@testing-library/react'
 import React, {useState, useEffect, useRef} from 'react'
 
 const Dropdown = ({options, selected, onSelectedChange}) => {
@@ -6,21 +5,12 @@ const Dropdown = ({options, selected, onSelectedChange}) => {
     const ref = useRef();
 
     useEffect(() => {
-        const onBodyClick = (e) => {
+        document.body.addEventListener('click', (e)=>{
             if (ref.current && ref.current.contains(e.target)) {
                 return;
             }
-         
-          setOpen(false);
-        }
-
-        document.body.addEventListener('click', onBodyClick)
-
-        // clean up funtion to avoid errors if the ref is not displaying
-        return () => {
-            document.body.removeEventListener('click', onBodyClick)
-        }
-
+            setOpen(false);
+        });
     }, []);
 
     const renderedOptions = options.map((option)=>{
